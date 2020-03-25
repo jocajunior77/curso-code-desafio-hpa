@@ -1,8 +1,8 @@
 package main
 
 import (
-	"math"
-	"net/http"
+    "math"
+    "net/http"
     "github.com/gorilla/mux"
 )
 
@@ -11,7 +11,11 @@ func calculo(w http.ResponseWriter, r *http.Request) {
     for i := 0; i < 1000000; i++ {
         x = x + math.Sqrt(x)
     }
-    w.Write([]byte("Code.education Rocks!"))
+    w.Write([]byte(greeting()))
+}
+
+func greeting() string {
+    return "Code.education Rocks!"
 }
 
 func main() {
