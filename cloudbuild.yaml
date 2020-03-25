@@ -1,0 +1,26 @@
+steps:
+
+- id: go_get
+  name: "gcr.io/cloud-builders/go"
+  args: ["get","-d","-v","github.com/gorilla/mux"]
+  env: ["GOPATH=/workspace/gopath"]
+
+- id: go_test
+  name: "gcr.io/cloud-builders/go"
+  args: ["test","./src"]
+  env: ["GOPATH=/workspace/gopath"]
+
+- id: go_build
+  name: "gcr.io/cloud-builders/go"
+  args: ["build","./src/app.go"]
+  env: ["GOPATH=/workspace/gopath"]
+
+- id: deploying_app
+  name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - 'apply'
+    - '-f'
+    - './hpa.yaml'
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=my-first-cluster-1'
